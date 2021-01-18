@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RecyclerAvito</string>
+    <string name="button_item_name">Удалить</string>
+    <string name="text_item_name">Элемент</string>
+</resources>
