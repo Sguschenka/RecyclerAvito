@@ -18,34 +18,22 @@ class MyRecyclerAdapter() : RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder>
             parent,
             false
         )
-
         return MyViewHolder(itemView)
     }
 
+    override fun getItemCount() = values.size               // Получение количества элементов в значениях адаптера
 
-
-    override fun getItemCount() = values.size
-
-
-    fun addItem(){
-        val item = myViewModel.addNewItem()
-        val index = myViewModel.itemList.value?.indexOf(item)
-        if (index == null) {return}
-        val listItemSize : Int = myViewModel.itemList.value!!.size
-        if (values.size != listItemSize) values.add(index, item)
+    fun addItem(index : Int){                               // Добавление нового элемента (Просим адаптер проверить изменения)
         notifyItemInserted(index)
-
     }
 
-
-
-    fun refreshItems(items: MutableList<Int>) {
+    fun refreshItems(items: MutableList<Int>) {            // Обновление значений
         this.values = items
         notifyDataSetChanged()
     }
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            holder.textViewItem?.text = values[position].toString()
+            holder.textViewItem?.text = values[position].toString()                        //Обработчик кнопки "Удалить" (на строку ниже)
             holder.itemButton.setOnClickListener {
 
                 myViewModel.addNewDeleted(values[holder.adapterPosition])
@@ -53,13 +41,9 @@ class MyRecyclerAdapter() : RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder>
                 notifyItemRemoved(holder.adapterPosition)
                 myViewModel.updateListItems(values)
             }
-
         }
 
-
-
-
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {               //Привязываем айдишники itemView к элементам в коде
         var textViewItem: TextView? = null
         val itemButton: Button
         init {
@@ -67,6 +51,4 @@ class MyRecyclerAdapter() : RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder>
             itemButton = itemView.findViewById(R.id.buttonItem)
         }
     }
-
-
 }
